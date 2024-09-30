@@ -1,3 +1,3 @@
-# Airbnb Clone Assignment 24
+# Airbnb Clone Assignment
 
-This is a assignment No.24 repository for [Nomad Coders](https://nomadcoders.co/) python challenge
+This is a assignment repository for [Nomad Coders](https://nomadcoders.co/) python challenge
