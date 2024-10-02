@@ -1,0 +1,9 @@
+<h1>ALL TWEETS</h1>
+<ul>
+  {% for tweet in tweets %}
+  <li>
+    <span>{{tweet.payload}}</span>
+    <span>- {{tweet.user}}</span>
+  </li>
+  {% endfor %}
+</ul>
