@@ -1,6 +1,5 @@
 from django.db import models
 from common.models import CommonModel  # Abstract class
-from django.contrib.auth.models import User  # django 기본 제공 User
 
 
 class Tweet(CommonModel):
@@ -9,7 +8,7 @@ class Tweet(CommonModel):
     )
 
     user = models.ForeignKey(
-        User,
+        "users.User",
         on_delete=models.CASCADE,  # user 삭제 시 Tweet 삭제
         related_name="tweets",
     )
@@ -23,7 +22,7 @@ class Tweet(CommonModel):
 
 class Like(CommonModel):
     user = models.ForeignKey(
-        User,
+        "users.User",
         on_delete=models.CASCADE,  # user 삭제 시 Like 삭제
         related_name="likes",
     )

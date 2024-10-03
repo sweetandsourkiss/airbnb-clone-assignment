@@ -30,8 +30,14 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+THRID_PARTY_APPS = [
+    "rest_framework",
+]
+
 CUSTOM_APPS = [
     "common.apps.CommonConfig",
+    "users.apps.UsersConfig",
     "tweets.apps.TweetsConfig",
 ]
 
@@ -44,7 +50,7 @@ SYSTEM_APPS = [
     "django.contrib.staticfiles",
 ]
 
-INSTALLED_APPS = CUSTOM_APPS + SYSTEM_APPS
+INSTALLED_APPS = CUSTOM_APPS + THRID_PARTY_APPS + SYSTEM_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -128,3 +134,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Auth
+AUTH_USER_MODEL = "users.User"

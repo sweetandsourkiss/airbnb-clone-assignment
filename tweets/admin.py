@@ -1,4 +1,3 @@
-from re import M
 from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
