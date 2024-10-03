@@ -6,7 +6,7 @@ from .models import Tweet
 
 
 @api_view(["GET"])
-def see_all_tweets(request):
+def tweets(request):
     if request.method == "GET":
         tweets = Tweet.objects.all()
         serializer = TweetSerializer(tweets, many=True)
