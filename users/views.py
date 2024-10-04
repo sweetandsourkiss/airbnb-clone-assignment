@@ -1,25 +1,17 @@
-from rest_framework.decorators import api_view
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
-from tweets.serializers import TweetSerializer
 from tweets.models import Tweet
+from tweets.serializers import TweetSerializer
 from .models import User
+from .serializers import UserSerializer
 
 
-@api_view()
-def user(request):
-    return Response({"hello": True})
+class UserViewSet(ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
-
-@api_view(["GET"])
-def user_tweets(request, user_id):
-    try:
-        _user = User.objects.get(pk=user_id)
-    except User.DoesNotExist:
-        raise NotFound
-
-    if request.method == "GET":
-        tweets = Tweet.objects.filter(user=user_id)
-        print(tweets)
-        serializer = TweetSerializer(tweets, many=True)
+    # Custom Method
+    def tweet(self, request, user_id):
+        queryset = Tweet.objects.filter(user=user_id)
+        serializer = TweetSerializer(queryset, many=True)
         return Response(serializer.data)
