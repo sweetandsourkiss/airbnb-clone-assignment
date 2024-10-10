@@ -1,17 +1,49 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.exceptions import ParseError, NotFound
 from rest_framework.response import Response
-from tweets.models import Tweet
+from rest_framework.views import APIView
+from rest_framework import status
+
+from .serializers import PublicUserSerializer, PrivateUserSerializer
 from tweets.serializers import TweetSerializer
+from tweets.models import Tweet
 from .models import User
-from .serializers import UserSerializer
 
 
-class UserViewSet(ModelViewSet):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
+class Users(APIView):
+    def get(self, request):
+        all_users = User.objects.all()
+        serializer = PublicUserSerializer(
+            all_users,
+            many=True,
+        )
+        return Response(serializer.data)
 
-    # Custom Method
-    def tweet(self, request, user_id):
-        queryset = Tweet.objects.filter(user=user_id)
-        serializer = TweetSerializer(queryset, many=True)
+    def post(self, request):
+        password = request.data.get("password")
+        if not password:
+            raise ParseError()
+        serializer = PrivateUserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            user.set_password(password)
+            user.save()
+            serializer = PrivateUserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class UserDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise NotFound
+
+    def get(self, request, pk):
+        user = self.get_object(pk)
+        serializer = PublicUserSerializer(user)
         return Response(serializer.data)

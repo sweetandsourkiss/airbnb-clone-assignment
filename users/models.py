@@ -5,18 +5,18 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     first_name = models.CharField(
         max_length=150,
+        editable=False,
     )
     last_name = models.CharField(
         max_length=150,
+        editable=False,
     )
     avatar = models.ImageField(
         blank=True,
     )
     name = models.CharField(
         max_length=150,
-        default="",
-        blank=True,
     )
 
     def __str__(self):
-        return f"{self.first_name}"
+        return f"{self.name}"

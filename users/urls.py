@@ -2,12 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path(
-        "<int:user_id>/tweets",
-        views.UserViewSet.as_view(
-            {
-                "get": "tweet",
-            }
-        ),
-    ),
+    path("", views.Users.as_view()),
+    path("<int:pk>", views.UserDetail.as_view()),
 ]

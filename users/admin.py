@@ -10,8 +10,6 @@ class CustomUserAdmin(admin.ModelAdmin):
             "Profile",
             {
                 "fields": (
-                    "first_name",
-                    "last_name",
                     "avatar",
                     "name",
                 )
